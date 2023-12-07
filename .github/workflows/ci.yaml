@@ -33,7 +33,7 @@ jobs:
         DOCKER_MACHINE_NAME: localhostx
         COMPOSE_TEST: ${{ secrets.COMPOSE_TEST }}
 
-    - name: Test using `docker-compose`
+    - name: Test using `docker-compose-2`
       working-directory: "/home/"
       shell: bash
       run: |-
