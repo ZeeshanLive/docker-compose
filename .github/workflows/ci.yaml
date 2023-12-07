@@ -27,7 +27,7 @@ jobs:
         ls
         cd /home/runner/work/docker-compose/docker-compose
         docker-compose -f docker-compose.yml up -d
-        docker-compose exec yhello_world_app env
+        docker-compose exec hello_world_app env
       env:
         DOCKER_HOST: unix:///var/run/docker.sock
         DOCKER_MACHINE_NAME: localhostx
