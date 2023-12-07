@@ -18,3 +18,9 @@ jobs:
         chmod +x ~/docker-compose
         sudo mv ~/docker-compose /usr/local/bin/docker-compose
         echo "COMPOSE_TLS_VERSION=TLSv1_2" >> $GITHUB_ENV
+    - name: Test using `docker-compose`
+      working-directory: "/"
+      shell: bash
+      run: |-
+        ls
+        docker-compose --tls -f docker-compose.yml up 

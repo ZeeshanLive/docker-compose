@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  hello_world_app:
+    image: nginx:latest
+    environment:
+      - GREETING=${GREETING}
+    ports:
+      - "8080:80"
