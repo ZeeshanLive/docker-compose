@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Check the environment variable
-if [ "$COMPOSE_TEST" = "TEST" ]; then
+if [ "$COMPOSE_TEST" = "TESsting" ]; then
     echo "Environment is valid. Proceeding..."
 else
     echo "Environment is not valid. Exiting..."
