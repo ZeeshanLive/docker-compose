@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       COMPOSE_TEST: '${{ secrets.COMPOSE_TEST }}'
-      TEST: "test"
+      # TEST: "test"
     steps:
     - uses: actions/checkout@v2
     - name: Install `docker-compose`
@@ -33,7 +33,7 @@ jobs:
         DOCKER_HOST: unix:///var/run/docker.sock
         DOCKER_MACHINE_NAME: localhostx
         COMPOSE_TEST: '${{ secrets.COMPOSE_TEST }}'
-        TEST: "test"
+        # TEST: "test"
 
     - name: Test using `docker-compose-2`
       working-directory: "/home/"
