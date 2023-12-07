@@ -7,7 +7,7 @@ jobs:
   build-and-deploy:
     defaults:
       run:
-        working-directory: "/"
+        working-directory: "/home/"
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -19,7 +19,7 @@ jobs:
         sudo mv ~/docker-compose /usr/local/bin/docker-compose
         echo "COMPOSE_TLS_VERSION=TLSv1_2" >> $GITHUB_ENV
     - name: Test using `docker-compose`
-      working-directory: "/"
+      working-directory: "/home/"
       shell: bash
       run: |-
         ls
