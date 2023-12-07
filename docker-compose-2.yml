@@ -1,0 +1,9 @@
+version: "3.8"
+
+services:
+  your_service:
+    build:
+      context: .
+    environment:
+      COMPOSE_TEST: ${COMPOSE_TEST}
+    # Other configurations for your service...
