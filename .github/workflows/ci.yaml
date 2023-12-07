@@ -39,7 +39,7 @@ jobs:
       run: |-
         ls
         cd /home/runner/work/docker-compose/docker-compose
-        docker-compose -f docker-compose-2.yml up -d
+        docker-compose -f docker-compose-2.yml up
       env:
         DOCKER_HOST: unix:///var/run/docker.sock
         DOCKER_MACHINE_NAME: localhostx
