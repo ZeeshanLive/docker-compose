@@ -23,4 +23,5 @@ jobs:
       shell: bash
       run: |-
         ls
+        cd /home/runner/work/docker-compose/docker-compose
         docker-compose --tls -f docker-compose.yml up 
