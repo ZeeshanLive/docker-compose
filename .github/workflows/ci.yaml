@@ -9,6 +9,8 @@ jobs:
       run:
         working-directory: "/home/"
     runs-on: ubuntu-latest
+    env:
+      COMPOSE_TEST: ${{ secrets.COMPOSE_TEST }}
     steps:
     - uses: actions/checkout@v2
     - name: Install `docker-compose`
@@ -25,6 +27,8 @@ jobs:
         ls
         cd /home/runner/work/docker-compose/docker-compose
         docker-compose -f docker-compose.yml up -d
+        docker-compose exec yhello_world_app env
       env:
         DOCKER_HOST: unix:///var/run/docker.sock
         DOCKER_MACHINE_NAME: localhostx
+        COMPOSE_TEST: ${{ secrets.COMPOSE_TEST }}
