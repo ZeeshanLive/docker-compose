@@ -4,6 +4,6 @@ services:
   hello_world_app:
     image: nginx:latest
     environment:
-      - COMPOSE_TEST: ${COMPOSE_TEST}
+      COMPOSE_TEST: ${COMPOSE_TEST}
     ports:
       - "8080:80"
