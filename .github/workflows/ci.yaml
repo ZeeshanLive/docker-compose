@@ -32,6 +32,7 @@ jobs:
         DOCKER_HOST: unix:///var/run/docker.sock
         DOCKER_MACHINE_NAME: localhostx
         COMPOSE_TEST: '${{ secrets.COMPOSE_TEST }}'
+        TEST: "test"
 
     - name: Test using `docker-compose-2`
       working-directory: "/home/"

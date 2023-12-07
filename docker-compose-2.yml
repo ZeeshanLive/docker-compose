@@ -5,3 +5,4 @@ services:
       context: .
     environment:
       COMPOSE_TEST: ${COMPOSE_TEST}
+      TEST: "TEST"
