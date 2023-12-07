@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       COMPOSE_TEST: '${{ secrets.COMPOSE_TEST }}'
+      TEST: "test"
     steps:
     - uses: actions/checkout@v2
     - name: Install `docker-compose`
