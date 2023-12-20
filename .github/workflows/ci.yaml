@@ -36,3 +36,4 @@ jobs:
         run: |
           echo "Steps after manual approval"
           # Your specific steps to be executed after manual approval
+          echo "blah"
