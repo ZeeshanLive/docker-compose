@@ -1,7 +1,6 @@
-name: Extended Workflow with Manual Approval
+name: Conditional Workflow
 
 on:
-  workflow_dispatch:
   push:
     branches:
       - '*'
@@ -20,20 +19,8 @@ jobs:
           echo "This code will run only if the branch is 'main'"
           # Your specific steps for the 'main' branch
 
-  manual_approval:
-    runs-on: ubuntu-latest
-    needs: check_branch
-    steps:
-      - name: Manual Approval
-        if: github.event_name == 'workflow_dispatch'
-        run: echo "Please approve this workflow run"
-
-  execute_after_approval:
-    runs-on: ubuntu-latest
-    needs: manual_approval
-    steps:
-      - name: Execute steps after manual approval
+      - name: Run if branch is not 'main'
+        if: ${{ github.ref != 'refs/heads/main' }}
         run: |
-          echo "Steps after manual approval"
-          # Your specific steps to be executed after manual approval
-          echo "blah"
+          echo "This code will run for branches other than 'main'"
+          # Your specific steps for branches other than 'main'
