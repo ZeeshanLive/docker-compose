@@ -1,58 +1,26 @@
-name: CICD
+name: Conditional Workflow
+
 on:
   push:
     branches:
-      - master
-      - feature
+      - '*'
+
 jobs:
-  build-and-deploy:
-    defaults:
-      run:
-        working-directory: "/home/"
+  check_branch:
     runs-on: ubuntu-latest
-    env:
-      COMPOSE_TEST: '${{ secrets.COMPOSE_TEST }}'
-      # TEST: "test"
+
     steps:
-    - uses: actions/checkout@v2
-    - name: Install `docker-compose`
-      shell: bash
-      run: |-
-        curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
-        chmod +x ~/docker-compose
-        sudo mv ~/docker-compose /usr/local/bin/docker-compose
-        echo "COMPOSE_TLS_VERSION=TLSv1_2" >> $GITHUB_ENV
-    - name: Test using `docker-compose`
-      working-directory: "/home/"
-      shell: bash
-      run: |-
-        ls
-        cd /home/runner/work/docker-compose/docker-compose
-        docker-compose -f docker-compose.yml up -d
-        docker-compose exec -T hello_world_app env
-      env:
-        DOCKER_HOST: unix:///var/run/docker.sock
-        DOCKER_MACHINE_NAME: localhostx
-        COMPOSE_TEST: '${{ secrets.COMPOSE_TEST }}'
-        # TEST: "test"
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Test using `docker-compose-2`
-      working-directory: "/home/"
-      shell: bash
-      run: |-
-        ls
-        cd /home/runner/work/docker-compose/docker-compose
-        docker-compose -f docker-compose-2.yml up
-      env:
-        DOCKER_HOST: unix:///var/run/docker.sock
-        DOCKER_MACHINE_NAME: localhostx
-        COMPOSE_TEST: '${{ secrets.COMPOSE_TEST }}'
-    - name: Extract branch name
-      run: echo "Branch name is ${GITHUB_REF#refs/heads/}"
+      - name: Run if branch is 'main'
+        if: ${{ github.ref == 'refs/heads/main' }}
+        run: |
+          echo "This code will run only if the branch is 'main'"
+          # Your specific steps for the 'main' branch
 
-    - name: Checking if its Feature branch 
-      working-directory: "/home/"
-      shell: bash
-      run: |-
-         if ${GITHUB_REF#refs/heads/} == "feature"
-            echo "Triggering feature branch"
+      - name: Run if branch is not 'main'
+        if: ${{ github.ref != 'refs/heads/main' }}
+        run: |
+          echo "This code will run for branches other than 'main'"
+          # Your specific steps for branches other than 'main'
