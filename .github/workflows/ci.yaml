@@ -46,3 +46,5 @@ jobs:
         DOCKER_HOST: unix:///var/run/docker.sock
         DOCKER_MACHINE_NAME: localhostx
         COMPOSE_TEST: '${{ secrets.COMPOSE_TEST }}'
+    - name: Extract branch name
+      run: echo "Branch name is ${GITHUB_REF#refs/heads/}"
