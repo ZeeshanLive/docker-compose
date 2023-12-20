@@ -40,10 +40,12 @@ jobs:
 
       - name: Extract Deleted Branch Name
         id: extract_branch
-        run: echo "::set-output name=branch_name::$(jq -r '.ref' event.json | sed 's|refs/heads/||')"
+        run: |
+          deleted_branch_name=$(jq -r '.ref' event.json | sed 's|refs/heads/||')
+          echo "Deleted branch name: $deleted_branch_name"
+          echo "deleted_branch_name=$deleted_branch_name" >> $GITHUB_ENV
 
       - name: Use Deleted Branch Name
         run: |
-          deleted_branch_name="${{ steps.extract_branch.outputs.branch_name }}"
-          echo "Deleted branch name: $deleted_branch_name"
+          echo "Deleted branch name from environment: $deleted_branch_name"
           # Add your further steps using $deleted_branch_name
