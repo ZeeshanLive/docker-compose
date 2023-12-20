@@ -1,0 +1,36 @@
+name: Conditional Workflow
+
+on:
+  push:
+    branches:
+      - '*'
+  delete:
+    branches:
+      - '*'
+
+jobs:
+  check_branch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run if branch is 'main'
+        if: ${{ github.ref == 'refs/heads/main' }}
+        run: |
+          echo "This code will run only if the branch is 'main'"
+          # Your specific steps for the 'main' branch
+
+      - name: Run if branch is not 'main'
+        if: ${{ github.ref != 'refs/heads/main' }}
+        run: |
+          echo "This code will run for branches other than 'main'"
+          # Your specific steps for branches other than 'main'
+
+      - name: Run on branch deletion
+        if: github.event_name == 'delete'
+        run: |
+          echo "Branch deleted. Running specific steps for branch deletion."
+          echo "blah blah"
+          # Your specific steps for branch deletion
