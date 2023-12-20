@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - '*'
+  delete:
+    branches:
+      - '*'
 
 jobs:
   check_branch:
@@ -24,3 +27,9 @@ jobs:
         run: |
           echo "This code will run for branches other than 'main'"
           # Your specific steps for branches other than 'main'
+
+      - name: Run on branch deletion
+        if: github.event_name == 'delete'
+        run: |
+          echo "Branch deleted. Running specific steps for branch deletion."
+          # Your specific steps for branch deletion
