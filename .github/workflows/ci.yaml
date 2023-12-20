@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      - feature
 jobs:
   build-and-deploy:
     defaults:
@@ -48,3 +49,10 @@ jobs:
         COMPOSE_TEST: '${{ secrets.COMPOSE_TEST }}'
     - name: Extract branch name
       run: echo "Branch name is ${GITHUB_REF#refs/heads/}"
+
+    - name: Checking if its Feature branch 
+      working-directory: "/home/"
+      shell: bash
+      run: |-
+         if ${GITHUB_REF#refs/heads/} == "feature"
+            echo "Triggering feature branch"
