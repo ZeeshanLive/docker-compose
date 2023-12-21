@@ -11,7 +11,8 @@ on:
 jobs:
   check_branch:
     runs-on: ubuntu-latest
-
+    env: 
+      DELETED_BRANCH: false 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -29,32 +30,35 @@ jobs:
           # Your specific steps for branches other than 'main'
 
       - name: Run on branch deletion
+        id: branch_deletion
         if: github.event_name == 'delete'
         run: |
+          echo "DELETED_BRANCH=true" >> $GITHUB_ENV
           echo "Branch deleted. Running specific steps for branch deletion."
           echo "blah blah"
-      
+          
+  
       - name: Get Event JSON
         run: |
+          echo $DELETED_BRANCH
+
+          echo ${{ steps.branch_deletion.outputs.deleted_branch}}
           echo "${{ toJson(github.event) }}" > event.json
-          echo $PWD
-          echo $(ls -ltr)
-          
+  
       - name: Extract Deleted Branch Name
+        if: env.DELETED_BRANCH == 'true'
         id: extract_branch
         run: |
-          echo $PWD
-          echo $(ls -ltr)
-          echo hello2
           deleted_branch_name=$(sed -n 's/.*ref: \(.*\),/\1/p' event.json)
           echo "Deleted branch name: $deleted_branch_name"
           echo "deleted_branch_name=$deleted_branch_name" >> $GITHUB_ENV
 
       - name: Use Deleted Branch Name
+        if: env.DELETED_BRANCH == 'true'
         run: |
-          echo "Deleted branch name: ${{ needs.extract_branch.outputs.deleted_branch_name }}"
+          echo "Deleted branch name: $deleted_branch_name"
 
       - name: Use Deleted Branch Name
+        if: env.DELETED_BRANCH == 'true'
         run: |
           echo "Deleted branch name from environment: $deleted_branch_name"
-          # Add your further steps using $deleted_branch_name
