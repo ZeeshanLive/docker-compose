@@ -5,14 +5,18 @@ on:
     workflows:
       - 'Main Workflow'
     types:
-      - deleted
+      - completed
 
 jobs:
   branch_delete_job:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Handle Branch Deletion
+      - name: Check if Workflow Run is Deleted
         run: |
-          echo "Branch deleted. Run your specific steps here."
-          # Add your steps to handle branch deletion
+          if [ "${{ github.event_name }}" == "workflow_run" ] && [ "${{ github.event.action }}" == "completed" ]; then
+            echo "Branch deleted. Run your specific steps here."
+            # Add your steps to handle branch deletion
+          else
+            echo "No branch deletion event detected. Skipping steps."
+          fi
