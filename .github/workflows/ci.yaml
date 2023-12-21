@@ -17,31 +17,28 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Run if branch is 'main'
-        if: ${{ github.ref == 'refs/heads/main' }}
+      - name: Run if branch is 'master'
+        if: ${{ github.ref == 'refs/heads/master' }}
         run: |
-          echo "This code will run only if the branch is 'main'"
+          echo "This code will run only if the branch is 'master'"
           # Your specific steps for the 'main' branch
 
-      - name: Run if branch is not 'main'
-        if: ${{ github.ref != 'refs/heads/main' }}
+      - name: Run if branch is not 'master'
+        if: ${{ github.ref != 'refs/heads/master' }}
         run: |
-          echo "This code will run for branches other than 'main'"
-          # Your specific steps for branches other than 'main'
-
+          echo "Branch name is $GITHUB_REF"
+          BRANCH_NAME=$(echo $GITHUB_REF | sed 's|refs/heads/||')
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+          echo $BRANCH_NAME
       - name: Run on branch deletion
         id: branch_deletion
         if: github.event_name == 'delete'
         run: |
           echo "DELETED_BRANCH=true" >> $GITHUB_ENV
-          echo "Branch deleted. Running specific steps for branch deletion."
-          echo "blah blah"
-          
+          echo "Branch deleted. Running specific steps for branch deletion."          
   
       - name: Get Event JSON
         run: |
-          echo $DELETED_BRANCH
-
           echo ${{ steps.branch_deletion.outputs.deleted_branch}}
           echo "${{ toJson(github.event) }}" > event.json
   
@@ -51,14 +48,13 @@ jobs:
         run: |
           deleted_branch_name=$(sed -n 's/.*ref: \(.*\),/\1/p' event.json)
           echo "Deleted branch name: $deleted_branch_name"
-          echo "deleted_branch_name=$deleted_branch_name" >> $GITHUB_ENV
 
-      - name: Use Deleted Branch Name
-        if: env.DELETED_BRANCH == 'true'
-        run: |
-          echo "Deleted branch name: $deleted_branch_name"
+      # - name: Use Deleted Branch Name
+      #   if: env.DELETED_BRANCH == 'true'
+      #   run: |
+      #     echo "Deleted branch name: $deleted_branch_name"
 
-      - name: Use Deleted Branch Name
-        if: env.DELETED_BRANCH == 'true'
-        run: |
-          echo "Deleted branch name from environment: $deleted_branch_name"
+      # - name: Use Deleted Branch Name
+      #   if: env.DELETED_BRANCH == 'true'
+      #   run: |
+      #     echo "Deleted branch name from environment: $deleted_branch_name"
