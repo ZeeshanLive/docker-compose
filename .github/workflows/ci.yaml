@@ -17,16 +17,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Run if branch is 'main'
-        if: ${{ github.ref == 'refs/heads/main' }}
+      - name: Run if branch is 'master'
+        if: ${{ github.ref == 'refs/heads/master' }}
         run: |
-          echo "This code will run only if the branch is 'main'"
+          echo "This code will run only if the branch is 'master'"
           # Your specific steps for the 'main' branch
 
-      - name: Run if branch is not 'main'
-        if: ${{ github.ref != 'refs/heads/main' }}
+      - name: Run if branch is not 'master'
+        if: ${{ github.ref != 'refs/heads/master' }}
         run: |
           echo "This code will run for branches other than 'main'"
+          echo "Branch name is ${{ github.ref }}"
           # Your specific steps for branches other than 'main'
 
       - name: Run on branch deletion
