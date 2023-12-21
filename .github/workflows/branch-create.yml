@@ -1,0 +1,18 @@
+name: Branch Create Workflow
+
+on:
+  workflow_run:
+    workflows:
+      - 'Main Workflow'
+    types:
+      - requested
+
+jobs:
+  branch_create_job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Handle Branch Creation
+        run: |
+          echo "Branch created. Run your specific steps here."
+          # Add your steps to handle branch creation
