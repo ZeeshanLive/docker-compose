@@ -57,8 +57,4 @@ jobs:
       # - name: Use Deleted Branch Name
       #   if: env.DELETED_BRANCH == 'true'
       #   run: |
-<<<<<<< HEAD
       #     echo "Deleted branch name from environment: $deleted_branch_name"
-=======
-      #     echo "Deleted branch name from environment: $deleted_branch_name"
->>>>>>> main
