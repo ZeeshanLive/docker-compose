@@ -28,6 +28,7 @@ jobs:
         run: |
           echo "This code will run for branches other than 'main'"
           echo "Branch name is ${{ github.ref }}"
+          echo "::set-output name=branch_name::$(echo ${{ github.ref }} | sed 's|refs/heads/||')"
           # Your specific steps for branches other than 'main'
 
       - name: Run on branch deletion
