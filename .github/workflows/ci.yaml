@@ -26,9 +26,9 @@ jobs:
       - name: Run if branch is not 'master'
         if: ${{ github.ref != 'refs/heads/master' }}
         run: |
-          echo "This code will run for branches other than 'main'"
-          echo "Branch name is ${{ github.ref }}"
-          echo "BRANCH_NAME=$(basename ${{ github.ref }})" >> $GITHUB_ENV
+          echo "Branch name is $GITHUB_REF"
+          BRANCH_NAME=$(echo $GITHUB_REF | sed 's|refs/heads/||')
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
           echo $BRANCH_NAME
       - name: Run on branch deletion
         id: branch_deletion
